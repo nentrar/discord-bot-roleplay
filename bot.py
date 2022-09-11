@@ -1,16 +1,28 @@
-# This is a sample Python script.
+import discord
+import os
+from discord.ext import commands
+from dotenv import load_dotenv
+from features.city_game import Adventure
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+load_dotenv()
+rp = Adventure()
+TOKEN = os.getenv('DISCORD_TOKEN')
+intents = discord.Intents.all()
+bot = commands.Bot(command_prefix='!', intents=intents)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+@bot.command(name="start")
+async def check_bot(ctx):
+    await ctx.author.send(rp.intro_message())
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@bot.command(name="answer")
+async def answer(ctx, *, arg):
+    if "get" in arg.lower() or "stankiewicz" in arg.lower:
+        await ctx.author.send(embed=rp.first_quest())
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    else:
+        await ctx.send("Jesteś pewien tej odpowiedzi?")
+
+
+bot.run(TOKEN)
