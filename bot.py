@@ -18,7 +18,7 @@ async def check_bot(ctx):
 
 @bot.command(name="answer")
 async def answer(ctx, *, arg):
-    if "get" in arg.lower() or "stankiewicz" in arg.lower:
+    if "get" in arg.lower() or "stankiewicz" in arg.lower():
         await ctx.author.send(embed=rp.first_quest())
 
     else:
